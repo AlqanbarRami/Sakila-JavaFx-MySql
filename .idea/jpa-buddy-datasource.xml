@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="f72dbf69-6b68-4bb0-9085-e2d70e6823c9" name="sakila" url="jdbc:postgresql://localhost/sakila" driverClass="org.postgresql.Driver" />
+      <data-source id="a34c7425-335d-4f38-9dd0-78a4761ad6c8" name="Sakila" url="jdbc:mysql://localhost/Sakila?useSSL=false&amp;allowMultiQueries=true&amp;serverTimezone=UTC" driverClass="com.mysql.cj.jdbc.Driver" />
+    </data-sources>
+  </component>
+</project>
