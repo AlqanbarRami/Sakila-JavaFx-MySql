@@ -1,35 +1,52 @@
 import Boards.Login;
-import com.sakila.Film;
+import Boards.MainBoard;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
-import javax.persistence.*;
-
-import java.util.List;
 
 public class Main extends Application {
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Login login = new Login();
-         primaryStage.setScene(login.loginScene());
-         primaryStage.show();
+    public void start(Stage primaryStage) {
 
+        Login login = new Login();
+        login.loginStage().show();
+        login.loginButton.setOnAction(event -> {
+            try {
+
+                login.userName.getText();
+                String passWord = login.passWord.getText();
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/"+login.databaseName.getText()+"?serverTimezone=UTC",login.userName.getText(),login.passWord.getText() );
+                if (connection.isValid(10)) {
+                    MainBoard mainBoard = new MainBoard();
+                    mainBoard.setUrl("jdbc:mysql://localhost/"+login.databaseName.getText()+"?serverTimezone=UTC");
+                    mainBoard.setUser(login.userName.getText());
+                    mainBoard.setPass(login.passWord.getText());
+                    mainBoard.mainScene();
+                }
+                else {
+                    System.out.println("Error");
+                }
+            }catch (Exception e){
+                System.out.println(e);
+            }
+        });
     }
 }
+
+
+
+        /*
+
+
+         */
+
+
+
 
