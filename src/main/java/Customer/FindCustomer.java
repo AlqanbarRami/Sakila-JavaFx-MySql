@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class FindCustomer extends MainBoard {
+public abstract class FindCustomer extends MainBoard {
     public BorderPane findPane = new BorderPane();
     public TableView<String> customerTableView = new TableView();
     public TableColumn<String , String> customerFirstName = new TableColumn<>("First Name");
