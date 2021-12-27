@@ -1,5 +1,7 @@
 package com.sakila;
 
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -122,6 +124,8 @@ public class Customer {
     public void setLastUpdate(int lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
+
+
 
     public Customer(String firstName, String lastName, String email) {
         this.firstName = firstName;

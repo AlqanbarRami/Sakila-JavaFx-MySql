@@ -25,7 +25,7 @@ public class Login {
     VBox forEveryThing = new VBox(20);
     BorderPane loginPain = new BorderPane();
 
-    public Stage loginStage(){
+    public Scene loginStage(){
         hBoxForUserName.setAlignment(Pos.CENTER);
         hBoxForPassword.setAlignment(Pos.CENTER);
         hBoxForUrl.setAlignment(Pos.CENTER);
@@ -40,10 +40,8 @@ public class Login {
         forEveryThing.getChildren().addAll(hBoxForUrl, hBoxForUserName,hBoxForPassword,loginButton);
         forEveryThing.setAlignment(Pos.CENTER);
         loginPain.setCenter(forEveryThing);
-        Scene sceneLogin = new Scene(loginPain, 400,400);
-        Stage loginStage = new Stage();
-        loginStage.setScene(sceneLogin);
-        return loginStage;
+        return new Scene(loginPain, 400,400);
+
     }
 
 }

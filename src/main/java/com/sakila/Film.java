@@ -186,4 +186,11 @@ public class Film {
         this.rating = rating;
     }
 
+    public Film(String title, String description, String release_year, int length, String rating) {
+        this.title = title;
+        this.description = description;
+        this.releaseYear = release_year;
+        this.length = length;
+        this.rating = rating;
+    }
 }
