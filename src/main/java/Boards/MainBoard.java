@@ -1,9 +1,7 @@
 package Boards;
 
 import Customer.ByFirstName;
-import Movie.ByActor;
-import Movie.ByGenre;
-import Movie.ByName;
+import Movie.*;
 import Language.FindLanguage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,6 +28,11 @@ public class MainBoard extends Login {
     public Button searchMovieButton = new Button("Find Movie");
     public HBox movieBox = new HBox(20);
 
+    public Label searchMovieToDelete = new Label("Delete Movie");
+    public TextField searchMovieInputDelete = new TextField();
+    public Button searchMovieButtonDelete = new Button("Find Movie");
+    public HBox movieBoxToDelete = new HBox(20);
+
     public Label searchActor = new Label("Search Actor");
     public TextField searchActorInput = new TextField();
     public Button searchActorButton = new Button("Find Actor");
@@ -39,14 +42,17 @@ public class MainBoard extends Login {
     public TextField searchGenreInput = new TextField();
     public Button searchGenreButton = new Button("Find Genre");
     public HBox genreBox = new HBox(20);
-    public Stage HomeStage = new Stage();
+
     public Label searchCustomer = new Label("Search Customer");
     public TextField searchCustomerInput = new TextField();
     public Button searchCustomerButton = new Button("Find Customer");
     public HBox hBoxForLanguage = new HBox(20);
+
     public Label searchLanguage = new Label("Search Language");
     public TextField searchLanguageInput = new TextField();
     public Button searchLanguageButton = new Button("Find Language");
+
+    public Stage HomeStage = new Stage();
     public HBox customerBox = new HBox(20);
     public VBox vBoxForFindingMovie =new VBox(30);
     public  VBox vBoxForRight = new VBox(30);
@@ -77,37 +83,55 @@ public class MainBoard extends Login {
     }
 
     public void mainScene(){
+
         searchMovieInput.setPromptText("By Title");
         searchActorInput.setPromptText("By First name Ex:FRED");
         searchGenreInput.setPromptText("Ex Horror");
         searchCustomerInput.setPromptText("By First Name");
         searchLanguageInput.setPromptText("Ex: English");
+        searchMovieInputDelete.setPromptText("Ex: Academy");
+
+
         movieBox.getChildren().addAll(searchMovie,searchMovieInput,searchMovieButton);
         actorBox.getChildren().addAll(searchActor,searchActorInput,searchActorButton);
         genreBox.getChildren().addAll(searchGenre,searchGenreInput,searchGenreButton);
         customerBox.getChildren().addAll(searchCustomer,searchCustomerInput,searchCustomerButton);
         hBoxForLanguage.getChildren().addAll(searchLanguage,searchLanguageInput, searchLanguageButton);
-        vBoxForRight.getChildren().addAll(customerBox,hBoxForLanguage);
+        movieBoxToDelete.getChildren().addAll(searchMovieToDelete,searchMovieInputDelete,searchMovieButtonDelete);
+
         searchMovieButton.setCursor(Cursor.HAND);
         searchActorButton.setCursor(Cursor.HAND);
         searchGenreButton.setCursor(Cursor.HAND);
         searchCustomerButton.setCursor(Cursor.HAND);
         searchLanguageButton.setCursor(Cursor.HAND);
+        searchMovieButtonDelete.setCursor(Cursor.HAND);
+
+        vBoxForRight.getChildren().addAll(customerBox,hBoxForLanguage,movieBoxToDelete);
         vBoxForFindingMovie.getChildren().addAll(movieBox,actorBox,genreBox);
+
+
         movieBox.setAlignment(Pos.CENTER);
         actorBox.setAlignment(Pos.CENTER);
         genreBox.setAlignment(Pos.CENTER);
         customerBox.setAlignment(Pos.CENTER);
         hBoxForLanguage.setAlignment(Pos.CENTER);
+        movieBoxToDelete.setAlignment(Pos.CENTER);
+
         mainBorder.setPadding(new Insets(40));
         mainBorder.setLeft(vBoxForFindingMovie);
         mainBorder.setRight(vBoxForRight);
         Scene mainScene = new Scene(mainBorder,1000,400);
         HomeStage.setScene(mainScene);
+
         searchMovieButton.setOnAction(event ->{
             ByName byName = new ByName();
             byName.findMovie(searchMovieInput.getText(),getUrl(),getUser(),getPass());
             HomeStage.close();
+        });
+
+        searchMovieButtonDelete.setOnAction(event -> {
+            FindMovieDelete findMovieDelete = new FindMovieDelete();
+            findMovieDelete.findMovie(searchMovieInputDelete.getText(),getUrl(),getUser(),getPass());
         });
         searchGenreButton.setOnAction(event ->{
             ByGenre byGenre = new ByGenre();
@@ -128,6 +152,8 @@ public class MainBoard extends Login {
             FindLanguage findLanguage = new FindLanguage();
             findLanguage.GetLanguage(searchLanguageInput.getText(),getUrl(),getUser(),getPass());
         });
+
+
 
         HomeStage.setTitle("CD Shopping");
         HomeStage.show();

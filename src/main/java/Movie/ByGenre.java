@@ -1,61 +1,22 @@
 package Movie;
 
-import com.sakila.Category;
+
 import com.sakila.Film;
-import com.sun.org.apache.bcel.internal.classfile.Unknown;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
-import javax.persistence.*;
+import javafx.scene.layout.VBox;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ByGenre extends FindMovie {
-    public TableColumn<Category,String> genreName = new TableColumn<>("Genre");
-    public TableView<Category> genreTableView = new TableView<>();
-    public TableView<Film> movieTableView = new TableView<>();
-    public ObservableList<Category> genreList;
-    public ObservableList stringList;
-
-
+    VBox vboxForInfo = new VBox(20);
     @Override
     public void findMovie(String nameOfQuery,String url , String user,String pass) {
-
-        movieList = FXCollections.observableArrayList();
-        genreList = FXCollections.observableArrayList();
-        stringList = FXCollections.observableArrayList();
-
-        /*
-        item.getFilmId(),item.getTitle(),item.getDescription(),item.getReleaseYear(),item.getRentalDuration(),
-                        item.getRentalRate(),item.getLength(),item.getReplacementCost(),item.getRating()
-         */
-        // genreTable.getColumns().add(genreName);
-        /*
-        movieTableView.getColumns().addAll(movieId,movieTitle, movieDescription, movieReleaseYear,
-                movieRentalDuration, movieRentalRate, movieLength, movieReplacementCost,
-                movieRating);
-
-         */
-
-        //genreTableView.getColumns().add(genreName);
-
-        movieTableView.getColumns().addAll(movieId, movieTitle, movieDescription, movieReleaseYear,
-                movieRentalDuration, movieRentalRate, movieLength, movieReplacementCost,
-                movieRating);
-
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
             String recordQuery = ("Select  ca.name ,fi.title, fi.film_id,  " +
@@ -70,33 +31,32 @@ public class ByGenre extends FindMovie {
             HBox hBoxForTable = new HBox();
             hBoxForTable.setPrefWidth(900);
             while (getRes.next()) {
-            //    genreList.add(new Category(getRes.getString("name")));
-                movieList.add(new Film(
-                        getRes.getInt("film_id"),
-                        getRes.getString("title"),
-                        getRes.getString("description"),
-                        getRes.getString("release_year"),
-                        getRes.getInt("rental_duration") ,
-                        getRes.getDouble("rental_rate"),
-                        getRes.getInt("length"),
-                        getRes.getDouble("replacement_cost"),
-                        getRes.getString("rating")));
+                      Film film = new Film();
+                      film.setFilmId(getRes.getInt("fi.film_id"));
+                      HBox hBoxForInfo = new HBox(5);
+                      Button editButton = new Button("Edit");
+                      Button deleteButton = new Button("Delete");
+                      Label Genre = new Label("| Genre: " + getRes.getString("ca.name") + " |");
+                      Label Title = new Label(" Title: " +getRes.getString("title")+ " |");
+                      Label ReleaseYear = new Label(" Release Year: " +getRes.getString("release_year")+ " |");
+                      Label RentalDuration = new Label(" Duration: " + getRes.getInt("rental_duration")+ " |");
+                      Label RentalRate = new Label(" Rate: " + getRes.getDouble("rental_rate") + " |");
+                      Label Length = new Label(" Length: " + getRes.getInt("length") + " |");
+                      Label ReplacementCost = new Label(" Rating: " +getRes.getString("rating")+ " |");
+                      hBoxForInfo.getChildren().addAll(Genre,Title,ReleaseYear,RentalDuration,RentalRate,Length,ReplacementCost,editButton,deleteButton);
+                      vboxForInfo.getChildren().add(hBoxForInfo);
+                      hBoxForInfo.setAlignment(Pos.CENTER);
+                deleteButton.setOnAction(event -> {
+                    DeleteMovie deleteMovie = new DeleteMovie();
+                    deleteMovie.MovieDelete(film.getFilmId());
 
+                });
+                editButton.setOnAction(event -> {
+                    EditMovie editMovie = new EditMovie();
+                    editMovie.MovieEdit(film.getFilmId());
+                });
             }
 
-            genreName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            movieId.setCellValueFactory(new PropertyValueFactory<>("filmId"));
-            movieTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-            movieDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-            movieReleaseYear.setCellValueFactory(new PropertyValueFactory<>("releaseYear"));
-            movieRentalDuration.setCellValueFactory(new PropertyValueFactory<>("rentalDuration"));
-            movieRentalRate.setCellValueFactory(new PropertyValueFactory<>("rentalRate"));
-            movieLength.setCellValueFactory(new PropertyValueFactory<>("length"));
-            movieReplacementCost.setCellValueFactory(new PropertyValueFactory<>("replacementCost"));
-            movieRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
-
-            movieTableView.setItems(movieList);
-            findPane.setCenter(movieTableView);
 
 
         } catch (SQLException e) {
@@ -105,9 +65,12 @@ public class ByGenre extends FindMovie {
         hBoxForMainMenuBack.getChildren().add(backToMainMenu);
         backToMainMenu.setCursor(Cursor.HAND);
         hBoxForMainMenuBack.setPadding(new Insets(20,0,20,5));
-        movieTableView.setItems(movieList);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setContent(vboxForInfo);
         findPane.setTop(hBoxForMainMenuBack);
-        findPane.setCenter(movieTableView);
+        findPane.setCenter(scrollPane);
         Scene findScene = new Scene(findPane, 1200, 800);
         foundStage.setScene(findScene);
         BackHome();
