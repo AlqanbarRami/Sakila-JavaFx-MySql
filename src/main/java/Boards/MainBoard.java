@@ -48,6 +48,9 @@ public class MainBoard extends Login {
     public Button searchCustomerButton = new Button("Find Customer");
     public HBox hBoxForLanguage = new HBox(20);
 
+    Button buttonForAddingMovie = new Button("Add New Movie");
+    HBox hBoxForAddingMovie = new HBox();
+
     public Label searchLanguage = new Label("Search Language");
     public TextField searchLanguageInput = new TextField();
     public Button searchLanguageButton = new Button("Find Language");
@@ -91,7 +94,6 @@ public class MainBoard extends Login {
         searchLanguageInput.setPromptText("Ex: English");
         searchMovieInputDelete.setPromptText("Ex: Academy");
 
-
         movieBox.getChildren().addAll(searchMovie,searchMovieInput,searchMovieButton);
         actorBox.getChildren().addAll(searchActor,searchActorInput,searchActorButton);
         genreBox.getChildren().addAll(searchGenre,searchGenreInput,searchGenreButton);
@@ -105,10 +107,11 @@ public class MainBoard extends Login {
         searchCustomerButton.setCursor(Cursor.HAND);
         searchLanguageButton.setCursor(Cursor.HAND);
         searchMovieButtonDelete.setCursor(Cursor.HAND);
+        buttonForAddingMovie.setCursor(Cursor.HAND);
 
         vBoxForRight.getChildren().addAll(customerBox,hBoxForLanguage,movieBoxToDelete);
         vBoxForFindingMovie.getChildren().addAll(movieBox,actorBox,genreBox);
-
+        hBoxForAddingMovie.getChildren().add(buttonForAddingMovie);
 
         movieBox.setAlignment(Pos.CENTER);
         actorBox.setAlignment(Pos.CENTER);
@@ -116,10 +119,13 @@ public class MainBoard extends Login {
         customerBox.setAlignment(Pos.CENTER);
         hBoxForLanguage.setAlignment(Pos.CENTER);
         movieBoxToDelete.setAlignment(Pos.CENTER);
+        hBoxForAddingMovie.setAlignment(Pos.BASELINE_CENTER);
+
 
         mainBorder.setPadding(new Insets(40));
         mainBorder.setLeft(vBoxForFindingMovie);
         mainBorder.setRight(vBoxForRight);
+        mainBorder.setBottom(hBoxForAddingMovie);
         Scene mainScene = new Scene(mainBorder,1000,400);
         HomeStage.setScene(mainScene);
 
@@ -132,6 +138,7 @@ public class MainBoard extends Login {
         searchMovieButtonDelete.setOnAction(event -> {
             FindMovieDelete findMovieDelete = new FindMovieDelete();
             findMovieDelete.findMovie(searchMovieInputDelete.getText(),getUrl(),getUser(),getPass());
+            HomeStage.close();
         });
         searchGenreButton.setOnAction(event ->{
             ByGenre byGenre = new ByGenre();
@@ -146,11 +153,18 @@ public class MainBoard extends Login {
         searchCustomerButton.setOnAction(event -> {
             ByFirstName findCustomer = new ByFirstName();
             findCustomer.findCustomer(searchCustomerInput.getText(),getUrl(),getUser(),getPass());
+
         });
 
         searchLanguageButton.setOnAction(event -> {
             FindLanguage findLanguage = new FindLanguage();
             findLanguage.GetLanguage(searchLanguageInput.getText(),getUrl(),getUser(),getPass());
+        });
+
+        buttonForAddingMovie.setOnAction(event -> {
+            AddMovie addMovie = new AddMovie();
+            addMovie.AddNewMovieStage();
+
         });
 
 

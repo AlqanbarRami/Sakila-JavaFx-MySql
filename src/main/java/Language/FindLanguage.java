@@ -50,7 +50,7 @@ public class FindLanguage extends MainBoard {
                 language.setName(getRes.getString("name"));
                 HBox hbxForInfoLabel = new HBox(40);
                 Label languageId = new Label("Language ID: " + language.getLanguageId());
-                Label languageName = new Label("Film Title: " + language.getName());
+                Label languageName = new Label("Language : " + language.getName());
                 Button getMovies = new Button("Get Movies");
                 hbxForInfoLabel.getChildren().addAll(languageId, languageName, getMovies);
                 hbxForInfoLabel.setAlignment(Pos.CENTER);
