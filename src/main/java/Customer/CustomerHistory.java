@@ -65,7 +65,7 @@ public abstract class CustomerHistory extends MainBoard {
             }
 
         }catch (SQLException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         vbForHistoryInfo.setAlignment(Pos.BASELINE_CENTER);
         Button paymentHistoryButton = new Button("Payment History");
@@ -134,7 +134,7 @@ public abstract class CustomerHistory extends MainBoard {
             }
 
         }catch (SQLException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         vBoxForPaymentInfo.setAlignment(Pos.BASELINE_CENTER);
         ScrollPane scrollPanePayment = new ScrollPane();

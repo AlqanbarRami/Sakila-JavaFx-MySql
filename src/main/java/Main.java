@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 
 public class Main extends Application {
@@ -33,8 +34,8 @@ public class Main extends Application {
                 else {
                     System.out.println("Error");
                 }
-            }catch (Exception e){
-                System.out.println(e);
+            }catch (SQLException e){
+                e.printStackTrace();
             }
         });
     }

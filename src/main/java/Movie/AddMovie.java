@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+
 
 public class AddMovie extends MainBoard {
     public Label titleLabel = new Label("Title:");

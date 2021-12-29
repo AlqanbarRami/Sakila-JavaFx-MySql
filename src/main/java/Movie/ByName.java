@@ -6,12 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

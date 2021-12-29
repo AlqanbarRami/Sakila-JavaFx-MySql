@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 
 public class FindLanguage extends MainBoard {
@@ -65,8 +65,8 @@ public class FindLanguage extends MainBoard {
                 });
             }
 
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException ignored) {
+
         }
         vboxForLanguage.setAlignment(Pos.BASELINE_CENTER);
         BorderPane languagePane = new BorderPane();

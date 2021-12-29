@@ -1,10 +1,8 @@
 package Movie;
 
 import Boards.MainBoard;
-import com.sakila.Category;
 import com.sakila.Film;
 import javafx.collections.ObservableList;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -12,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
+
 
 public abstract class FindMovie extends MainBoard {
     public BorderPane findPane = new BorderPane();
